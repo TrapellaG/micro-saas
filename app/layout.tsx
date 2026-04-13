@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={geist.variable}>
-      <body className="min-h-screen bg-gray-50">
+      <body className="min-h-screen bg-gray-50 font-[family-name:var(--font-geist-sans)]">
         <Navbar />
         {children}
       </body>
