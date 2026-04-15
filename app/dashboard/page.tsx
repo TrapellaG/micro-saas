@@ -26,7 +26,6 @@ export default async function DashboardPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-12">
-      {/* Header */}
       <div className="mb-10">
         <h1 className="text-3xl font-bold text-gray-900">
           Bienvenido, {session.user?.name} 👋
@@ -35,7 +34,6 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Tarjeta de suscripción */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Tu suscripción
@@ -83,7 +81,6 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {/* Tarjeta de cuenta */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Tu cuenta
