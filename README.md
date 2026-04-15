@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🚀 Micro-SaaS
 
-## Getting Started
+Plataforma SaaS completa con autenticación, suscripciones y pagos construida con Next.js 16, Prisma, Supabase y Stripe.
 
-First, run the development server:
+🌐 **Live demo:** [micro-saas-ugbb.vercel.app](https://micro-saas-ugbb.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🔐 **Autenticación** — Registro y login con email/contraseña usando NextAuth v5
+- 💳 **Pagos** — Checkout y suscripciones recurrentes con Stripe
+- 👤 **Dashboard** — Panel de usuario con gestión de suscripción
+- 🔔 **Webhooks** — Sincronización automática del estado de suscripción
+- 🗄️ **Base de datos** — PostgreSQL con Prisma ORM y Supabase
+- 🎨 **UI** — Diseño responsive con Tailwind CSS
+- 🚀 **Deploy** — Desplegado en Vercel con CI/CD automático
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+| Tecnología | Uso |
+|------------|-----|
+| [Next.js 16](https://nextjs.org) | Framework React con App Router |
+| [NextAuth v5](https://authjs.dev) | Autenticación |
+| [Prisma](https://prisma.io) | ORM para base de datos |
+| [Supabase](https://supabase.com) | PostgreSQL en la nube |
+| [Stripe](https://stripe.com) | Pagos y suscripciones |
+| [Tailwind CSS](https://tailwindcss.com) | Estilos |
+| [Vercel](https://vercel.com) | Deploy y hosting |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📦 Instalación
 
-## Deploy on Vercel
+1. Clona el repositorio
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  git clone https://github.com/TrapellaG/micro-saas.git
+  cd micro-saas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Instala las dependencias
+   npm install
+
+3. Configura las variables de entorno
+   # Base de datos
+  DATABASE_URL="postgresql://..."
+  DIRECT_URL="postgresql://..."
+  
+  # NextAuth
+  NEXTAUTH_URL="http://localhost:3000"
+  NEXTAUTH_SECRET="tu-secret"
+  
+  # Stripe
+  STRIPE_SECRET_KEY="sk_test_..."
+  STRIPE_PUBLISHABLE_KEY="pk_test_..."
+  STRIPE_WEBHOOK_SECRET="whsec_..."
+  STRIPE_PRO_PRICE_ID="price_..."
+  STRIPE_ENTERPRISE_PRICE_ID="price_..."
+  
+  # Stripe públicas
+  NEXT_PUBLIC_STRIPE_PRO_PRICE_ID="price_..."
+  NEXT_PUBLIC_STRIPE_ENTERPRISE_PRICE_ID="price_..."
+  NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+4. Genera el cliente de Prisma y ejecuta las migraciones  
+   npx prisma generate
+   npx prisma db push
+
+5. Arranca el servidor
+   npm run dev
+
+💳 Stripe en local
+  Para probar los pagos en local necesitas el Stripe CLI:
+    Escuchar webhooks
+      stripe listen --forward-to localhost:3000/api/stripe/webhook
+    Tarjeta de test:
+    Número:  4242 4242 4242 4242
+    Fecha:   12/29
+    CVC:     123
+
+🚀 Deploy en Vercel
+  Importa el repositorio en Vercel
+  Añade todas las variables de entorno
+  Añade el webhook de Stripe apuntando a:
+    https://tu-dominio.vercel.app/api/stripe/webhook
