@@ -1,3 +1,4 @@
+import CheckoutButton from "@/components/billing/CheckoutButton";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 
@@ -14,6 +15,7 @@ const plans = [
     ],
     cta: "Empieza gratis",
     href: "/register",
+    priceId: null,
     highlighted: false,
   },
   {
@@ -29,7 +31,8 @@ const plans = [
       "API access",
     ],
     cta: "Empezar con Pro",
-    href: "/register",
+    href: null,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
     highlighted: true,
   },
   {
@@ -46,8 +49,9 @@ const plans = [
       "SLA garantizado",
       "Facturación personalizada",
     ],
-    cta: "Contactar ventas",
-    href: "/register",
+    cta: "Empezar con Enterprise",
+    href: null,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_ENTERPRISE_PRICE_ID,
     highlighted: false,
   },
 ];
@@ -55,7 +59,6 @@ const plans = [
 export default function PricingPage() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-24">
-      {/* Header */}
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Precios simples y transparentes
@@ -65,7 +68,6 @@ export default function PricingPage() {
         </p>
       </div>
 
-      {/* Plans */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {plans.map((plan) => (
           <div
@@ -83,26 +85,20 @@ export default function PricingPage() {
             )}
 
             <h2
-              className={`text-2xl font-bold mb-2 ${
-                plan.highlighted ? "text-white" : "text-gray-900"
-              }`}
+              className={`text-2xl font-bold mb-2 ${plan.highlighted ? "text-white" : "text-gray-900"}`}
             >
               {plan.name}
             </h2>
 
             <p
-              className={`text-sm mb-6 ${
-                plan.highlighted ? "text-blue-100" : "text-gray-500"
-              }`}
+              className={`text-sm mb-6 ${plan.highlighted ? "text-blue-100" : "text-gray-500"}`}
             >
               {plan.description}
             </p>
 
             <div className="mb-6">
               <span
-                className={`text-4xl font-bold ${
-                  plan.highlighted ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-4xl font-bold ${plan.highlighted ? "text-white" : "text-gray-900"}`}
               >
                 ${plan.price}
               </span>
@@ -128,14 +124,22 @@ export default function PricingPage() {
               ))}
             </ul>
 
-            <Link href={plan.href}>
-              <Button
+            {/* ✅ Fix: comprobamos priceId y href correctamente */}
+            {plan.priceId ? (
+              <CheckoutButton
+                priceId={plan.priceId}
                 variant={plan.highlighted ? "secondary" : "outline"}
                 className="w-full"
               >
                 {plan.cta}
-              </Button>
-            </Link>
+              </CheckoutButton>
+            ) : plan.href ? (
+              <Link href={plan.href}>
+                <Button variant="outline" className="w-full">
+                  {plan.cta}
+                </Button>
+              </Link>
+            ) : null}
           </div>
         ))}
       </div>
